@@ -1,20 +1,13 @@
 import express from "express";
-import { createRecord } from "../controllers/healthRecordController.js";
+import { createRecord, getAllRecord, getRecordId, removeRecord, updateRecord } from "../controllers/healthRecordController.js";
+import { authCheck } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post('/', createRecord)
-router.get('/', (req, res) => {
-  res.send("test get health")
-})
-router.get('/:id', (req, res) => {
-  res.send("test get id health")
-})
-router.patch('/:id', (req, res) => {
-  res.send("test patch health")
-})
-router.delete('/:id', (req, res) => {
-  res.send("test delete health")
-})
+router.post('/', authCheck, createRecord)
+router.get('/', authCheck, getAllRecord)
+router.get('/:id', authCheck, getRecordId)
+router.patch('/:id', authCheck, updateRecord)
+router.delete('/:id', authCheck, removeRecord)
 
 export default router;
